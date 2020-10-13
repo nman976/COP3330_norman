@@ -1,17 +1,7 @@
-abstract class Shape {
-    String breed;
+// This Shape class is an abstract class. Holds general info about a shape.
+public abstract class Shape {
 
-    public void bark(){
-        System.out.println("Bark!");
-    }
-
-
+    public abstract String getName(); // abstract method
+    public abstract double getArea();
 }
 
-public class Shape {
-    public void main(String[] args){
-        Shape s = new Shape();
-
-
-    }
-}
