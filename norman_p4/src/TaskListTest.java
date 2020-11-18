@@ -1,7 +1,7 @@
 package src;
 
 import org.junit.jupiter.api.Test;
-
+/*
 import static org.junit.jupiter.api.Assertions.*;
 class TaskItemTest {
     @Test
@@ -43,7 +43,7 @@ class TaskItemTest {
 class TaskListTest{
     @Test
     public void addingTaskItemsIncreasesSize() {
-
+        TaskList t = new TaskList();
     }
     @Test
     public void completingTaskItemChangesStatus() {
@@ -131,3 +131,5 @@ class TaskListTest{
 
 
 }
+
+ */

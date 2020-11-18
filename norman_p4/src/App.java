@@ -1,8 +1,13 @@
 package src;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 public class App {
-
+    static final String fileLocation = "c:/temp/TaskList.txt";
     static String mainInput;
     static boolean shouldQuitVar;
     static Scanner input = new Scanner(System.in);
@@ -13,13 +18,9 @@ public class App {
     static String listInput;
 
     private TaskList tasks;
-    public App(){
+    public App() throws IOException {
         tasks = new TaskList();
     }
-
-
-
-
 
     public static String getMainMenuInput() {
         System.out.println("Main menu");
@@ -38,7 +39,9 @@ public class App {
         return shouldQuitVar;
     }
 
-    private void processMainMenuInput() {
+    private void processMainMenuInput() throws IOException {
+
+
         while (!shouldQuit(getMainMenuInput())) {
 
             System.out.println("Step 3: enter while loop");
@@ -49,7 +52,7 @@ public class App {
         }
     }
 
-    public String validateMainMenuInput() {
+    public String validateMainMenuInput() throws IOException {
         System.out.println("Step 4: Open processMainMenuInput");
         //Scanner newInput = new Scanner(System.in);
         if (mainInput.equals("1")) {
@@ -58,7 +61,9 @@ public class App {
             System.exit(0);
 
         } else if (mainInput.equals("2")) {
-            System.out.println("This feature is not yet ready");
+            tasks = TaskList.stringToTaskList(fileLocation);
+
+            createNewList();
             System.exit(0);
         } else {
             System.out.println("You have entered an incorrect value. Please enter 1, 2, or 3");
@@ -69,7 +74,7 @@ public class App {
     }
 
     // Here are the List Methods
-    public void createNewList() {
+    public void createNewList() throws IOException {
         while (!listQuit(printMenu())) {
 
             System.out.println("Step 3: processListInput");
@@ -79,7 +84,7 @@ public class App {
         }
     }
 
-    private String processListInput() {
+    private String processListInput() throws IOException {
         switch (listInput) {
             case "1": {
                 tasks.printTaskList();
@@ -106,34 +111,32 @@ public class App {
                 String description = input.nextLine();
                 System.out.println("Task due date (YYYY-MM-DD): ");
                 String dueDate = input.nextLine();
-                tasks.editTaskListItem(taskItemNumber, title, description, dueDate);
+                tasks.editTaskListItem(Integer.valueOf(taskItemNumber), title, description, dueDate);
                 break;
             }
             case "4": {
                 tasks.printTaskList();
                 System.out.println("Which item will you remove? ");
                 String taskItemNumber = input.nextLine();
-                tasks.removeTaskListItem(taskItemNumber);
+                tasks.removeTaskListItem(Integer.valueOf(taskItemNumber));
                 break;
             }
             case "5": {
                 tasks.printTaskList();
                 System.out.println("Which item will you mark as completed");
                 String taskItemNumber = input.nextLine();
-                tasks.markTaskListItemComplete(taskItemNumber);
+                tasks.markTaskListItemComplete(Integer.valueOf(taskItemNumber));
                 break;
             }
             case "6": {
                 tasks.printTaskList();
                 System.out.println("Which item will you unmark as completed");
                 String taskItemNumber = input.nextLine();
-                tasks.unmarkTaskListItemComplete(taskItemNumber);
+                tasks.unmarkTaskListItemComplete(Integer.valueOf(taskItemNumber));
                 break;
             }
             case "7": {
-                System.out.println("Enter the filename to save as: ");
-                String listFileName = input.nextLine();
-                tasks.saveTaskList(listFileName);
+                tasks.saveTaskList(fileLocation);
                 break;
             }
             case "8":
@@ -172,58 +175,9 @@ public class App {
     private void processTaskListData(){
         //while(listInput == "2")
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         App m = new App();
         m.processMainMenuInput();
     }
 }
-// pseudocode
-
-// initialize title as a list of strings
-// initialize date as list of strings
-// initialize descriptions as a list of strings
-
-// prompt user to create, load list or quit program from main menu
-
-    // while input != quit
-        // if input = create
-            // prompt user to view, add item, edit item, remove item, mark completed, unmark completed, save list, or quit
-                // if input = view
-                    // display uncompleted items in list and prompt user with main menu
-                // if input equals add item
-                    // prompt user to enter 'title,' 'description,' and 'date'
-                        // title = read string from user
-                        // description = read String from user
-                        // date = read string (until sorted later)
-
-                        // store title, description, and date strings in "data"
-                        // store numerical position of item, starting at 0
-
-                        // prompt user with main menu again
-                // if input = edit item
-                    // display uncompleted items in current list and prompt user to enter the item number to modify
-                    // prompt user to enter new 'title,' 'description,' and 'date'
-                    // prompt user with main menu again
-
-                // if input = remove
-                    // display uncompleted items in current list and prompt user to enter item number
-                        //delete item and replace item with those following with position i -1
-                    // display main menu
-                // if input = mark completed
-                    // display incomplete items, prompt the user to enter item number, and use boolean isComplete = false to print "**" before the date value
-                    // display main menu
-                // if input = mark incomplete
-                    // display items having boolean isComplete = true, and prompt user to enter a value
-                    // for item entered, mark boolean isComplete = false
-                    // prompt list menu
-                // if input = save current list
-                    // prompt the user to enter filename and save to desktop
-                // if input = return to main menu
-                    // return to main menu
-        // if input = load a list
-            // prompt user to enter file name
-                // if exact, load file
-                // display main menu
-        // if input = quit
-            // end program
 

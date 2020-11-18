@@ -4,24 +4,44 @@ public class TaskItem {
     private String title;
     private String description;
     private String dueDate;
+    private Boolean complete = false;
+    private static int index =0;
+    private int counter = 0;
 
-    public TaskItem(String TaskItemNumber, String title, String description, String dueDate){
-        if(isTitleValid(title)){
-            this.title = title;
-        } else {
-            throw new InvalidTitleException("Title is not valid. Must be 1+ characters long");
-        }
-
-        if(isdueDateValid(dueDate)){
-            this.dueDate = dueDate;
-        } else {
-            throw new InvalidDueDateException("due Date not valid. must be in MM-DD-YYYY format");
-        }
+    public TaskItem(String title, String description, String dueDate) {
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        index++;
+        counter = index;
+    }
+    public boolean isComplete() {
+        return complete;
     }
 
-    //public String toString(){
-        //return "["+ dueDate + "]" + " " + title + ": "+ description;
-    //}
+    public void setComplete(boolean complete){
+        this.complete = complete;
+    }
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public String getDueDate(){
+        return dueDate;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
     private boolean isTitleValid(String title) {
         return title.length() >0;
     }
@@ -29,18 +49,15 @@ public class TaskItem {
         return true;
     }
     public void setTitle(String title){
-
-    }
-    public String getTitle(){
-        return this.title;
+    this.title = title;
     }
 
-    public String getDueDate(){
-        return this.dueDate;
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 
-    public String getDescription(){
-        return this.description;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
 
